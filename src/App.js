@@ -68,7 +68,7 @@ const App = () => {
             <Reviews state={state} dispatch={dispatch} />
           </Route>
           <Route>
-            <HomePage />
+            <p>Page not found</p>
           </Route>
       </Switch>
       
