@@ -1,31 +1,40 @@
-import { useState, useEffect, useRef } from 'react';
+import {  useEffect, useRef } from 'react';
+import { Link, } from "react-router-dom"
+import { firstFetch } from "../Services/services"
+import s from './HomePage.module.css'
 
 
-const HomePage = ({ fetchForMovie }) => {
 
-    const [popMovies, setPopMovies] = useState([]);
-    // const [status, setStatus] = useState('idle')
+const HomePage = ({ popMovies, dispatch }) => {
     const isFirstRender = useRef(true);
-
 
     useEffect(() => {
 
         if (isFirstRender.current) {
-            fetchForMovie().then(movie => setPopMovies([...popMovies, movie])).catch(error => { console.log(error) });
+            dispatch({ type: 'resetDetailsData' });
+            dispatch({ type: 'setStatus', payload: 'pending' });
+            firstFetch().then(movie => {
+                dispatch({ type: 'setPopMovies', payload: movie.results })
+                dispatch({ type: 'setStatus', payload: 'resolved' });
+            })
+                .catch(error => { console.log(error) });
             isFirstRender.current = false
-            // console.log('первый рендер')
             return
         };
-
-    })
-
-    console.log(popMovies)
+    });
     
-
-
-
-
-    return (<h1>HomePage</h1>)
+    return (
+        <>
+        <h1>Trending today</h1>
+        <ul className={s.firstRenderList}>
+                {popMovies.map((movie) => { 
+                    if (movie.title) {
+                        return (<li key={movie.id} ><Link to={`movies/${movie.id}`} className={s.link}>{movie.title}</Link></li> )
+                    };
+            })}
+        </ul>
+        </>
+    )
 }
 
 export default HomePage

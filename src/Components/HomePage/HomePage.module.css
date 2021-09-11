@@ -1,0 +1,8 @@
+.firstRenderList {
+  list-style: none;
+}
+.link {
+  text-decoration: none;
+  font-size: 25px;
+  margin-left: -36px;
+}

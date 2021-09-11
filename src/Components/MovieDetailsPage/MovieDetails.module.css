@@ -1,0 +1,19 @@
+.detailsContainer {
+  display: flex;
+}
+.pictureBlock {
+  display: block;
+}
+.dataBlock {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-left: 15px;
+}
+.generList {
+  font-size: 18px;
+  margin-bottom: 10px;
+  margin-left: -15px;
+}
+.poster {
+  width: 100%;
+}
