@@ -11,7 +11,7 @@ const HomePage = ({ popMovies, dispatch }) => {
     useEffect(() => {
 
         if (isFirstRender.current) {
-            dispatch({ type: 'resetDetailsData' });
+            // dispatch({ type: 'resetDetailsData' });
             dispatch({ type: 'setStatus', payload: 'pending' });
             firstFetch().then(movie => {
                 dispatch({ type: 'setPopMovies', payload: movie.results })
