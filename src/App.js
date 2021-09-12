@@ -1,14 +1,14 @@
-import './App.css';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import { useReducer } from 'react';
-import Container from './Components/Container/Container';
-import Navigation from './Components/Navigation/Navigation';
-import HomePage from './Components/HomePage/HomePage'
-import MoviesPage from './Components/MoviesPage/MoviesPage'
-import MovieDetailsPage from './Components/MovieDetailsPage/MovieDetailsPage'
-import Cast from './Components/Cast/Cast'
-import Reviews from './Components/Reviews/Reviews'
+import './App.css'
+import { Route, Switch, BrowserRouter } from 'react-router-dom'
+import { useReducer, lazy, Suspense } from 'react'
+import Container from './Components/Container/Container'
+import Navigation from './Components/Navigation/Navigation'
 
+const HomePage = lazy(()=> import('./Components/HomePage/HomePage' /* webpackChunkName: "HomePage" */))
+const MoviesPage = lazy(() => import('./Components/MoviesPage/MoviesPage' /* webpackChunkName: "MoviesPage" */))
+const MovieDetailsPage = lazy(() => import('./Components/MovieDetailsPage/MovieDetailsPage' /* webpackChunkName: "MovieDetailsPage" */))
+const Cast = lazy(() => import('./Components/Cast/Cast' /* webpackChunkName: "Cast" */))
+const Reviews = lazy(()=> import('./Components/Reviews/Reviews' /* webpackChunkName: "Reviews" */))
 
 const initialState = {
   popMovies: [],
@@ -16,8 +16,8 @@ const initialState = {
   status: 'idle',
   movieDetails: null,
   cast: [],
-  reviews: null
-}
+  reviews: []
+};
 
 function setReduser(state, action) {
   switch (action.type) {
@@ -33,23 +33,20 @@ function setReduser(state, action) {
       return { ...state, cast: action.payload };
     case 'setReviews':
       return { ...state, reviews: action.payload };
-    case 'resetDetailsData':
-      return {...state, movieDetails: null, cast: [], reviews: []}
     default: console.log(`unexpected action type ${action.type}`)
   };
-    
-}
+};
 
 const App = () => {
 
   const [state, dispatch] = useReducer(setReduser, initialState)
 
-
   return (
     <BrowserRouter>
       <Container>
       <Navigation />
-      <Switch>
+      <Suspense fallback={<p>Loading...</p>}>
+        <Switch>
           <Route path="/" exact>
             <HomePage popMovies={state.popMovies} dispatch={dispatch}/>
           </Route>
@@ -63,23 +60,18 @@ const App = () => {
             <MovieDetailsPage state={state} dispatch={dispatch} />
             <Cast state={state} dispatch={dispatch} />
           </Route>
-          <Route path="/movies/:movieId/Reviews" >
+          <Route path="/movies/:movieId/Reviews">
             <MovieDetailsPage state={state} dispatch={dispatch} />
             <Reviews state={state} dispatch={dispatch} />
           </Route>
           <Route>
-            <p>Page not found</p>
+            <HomePage popMovies={state.popMovies} dispatch={dispatch}/>
           </Route>
       </Switch>
-      
+      </Suspense>
     </Container>
     </BrowserRouter>
-    
-    
-
   );
-
-  
 };
 
 export default App;

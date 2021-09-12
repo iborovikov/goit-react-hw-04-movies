@@ -1,5 +1,6 @@
-import { fetchByMovieTitle } from "../Services/services"
+import PropTypes from 'prop-types'
 import { useState, useEffect, useRef } from 'react'
+import { fetchByMovieTitle } from "../Services/services"
 import MoviesPageForm from './MoviesPageForm'
 import MoviesList from './MoviesList'
 
@@ -12,36 +13,29 @@ const MoviesPage = ({ state: { status, movieList }, dispatch }) => {
 
     useEffect(() => {
         if (isFirstRender.current) {
-            dispatch({ type: 'resetDetailsData' });
             isFirstRender.current = false
             return
         };
-        
         dispatch({ type: 'setStatus', payload: 'pending' });
         fetchByMovieTitle(movieTitle).then(movie => {
             dispatch({ type: 'setMovieList', payload: movie.results });
             dispatch({ type: 'setStatus', payload: 'resolved' });
-
         })
             .catch(error => {
                 dispatch({ type: 'setStatus', payload: 'rejected' });
                 console.log(error)
             });
         
-    }, [movieTitle, dispatch])
-
-    
+    }, [movieTitle, dispatch]);
 
     const onSubmit = (e) => {
         e.preventDefault();
         setMovieTitle(inputText);
-    }
+    };
 
     const handleInputChange = (e) => {
-        setInputText(e.target.value)
-
-    }
-    
+        setInputText(e.target.value);
+    };
 
     if (status === 'idle') {
         return (
@@ -49,7 +43,7 @@ const MoviesPage = ({ state: { status, movieList }, dispatch }) => {
         );
     };
     if (status === 'pending') {
-        return <p>Загрузка...</p>
+        return <p>Loading...</p>
     };
     if (status === 'resolved') {
         return (
@@ -64,3 +58,14 @@ const MoviesPage = ({ state: { status, movieList }, dispatch }) => {
     };
 };
 export default MoviesPage
+
+MoviesPage.propTypes = {
+    state: PropTypes.shape({
+        status: PropTypes.string.isRequired,
+        movieList: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            title: PropTypes.string.isRequired,
+        })).isRequired
+    }),
+    dispatch: PropTypes.func.isRequired,
+};

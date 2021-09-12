@@ -6,24 +6,21 @@ const firstFetch = () => {
         .then(res => res.json())
         .catch(error => console.log(error))
     );
-        
-}
+};
 const fetchByMovieTitle = (title) => {
     return (
         fetch(`${URL}search/movie?api_key=${API_KEY}&query=${title}`)
             .then(res => res.json())
             .catch(error => console.log(error))
     );
-
-}
-
+};
 const fetchMovieById = (id) => {
     return (
         fetch(`${URL}movie/${id}?api_key=${API_KEY}`)
             .then(res => res.json())
             .catch(error => console.log(error))
     );
-}
+};
 
 const fetchMovieCast = (id) => {
     return (
@@ -31,7 +28,7 @@ const fetchMovieCast = (id) => {
             .then(res => res.json())
             .catch(error => console.log(error))
     );
-}
+};
 
 const fetchMovieReviews = (id) => {
     return (
@@ -39,7 +36,7 @@ const fetchMovieReviews = (id) => {
             .then(res => res.json())
             .catch(error => console.log(error))
     );
-}
+};
 
 export {
     firstFetch,
@@ -47,4 +44,4 @@ export {
     fetchMovieById,
     fetchMovieCast,
     fetchMovieReviews
-}
+};

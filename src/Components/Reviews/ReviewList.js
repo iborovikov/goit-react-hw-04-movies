@@ -1,4 +1,6 @@
-const ReviewList = ({reviews}) => {
+import PropTypes from 'prop-types'
+
+const ReviewList = ({ reviews }) => {
     return (
         <ul>
             {reviews.map(details => {
@@ -8,7 +10,14 @@ const ReviewList = ({reviews}) => {
                 </li>
             })}
         </ul>);
-    
-}
+};
 
-export default ReviewList
+export default ReviewList;
+
+ReviewList.propTypes = {
+    reviews: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        author: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+    })).isRequired,
+};

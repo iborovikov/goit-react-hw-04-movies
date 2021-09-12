@@ -1,15 +1,15 @@
+import PropTypes from 'prop-types'
 import { useParams } from "react-router-dom"
+import { useEffect, useRef } from 'react'
 import { fetchMovieReviews } from '../Services/services'
-import { useEffect, useRef } from 'react';
-import ReviewList from "./ReviewList";
-import NotFoundView from "../NotFoundView/NotFoundView";
+import ReviewList from "./ReviewList"
+import NotFoundView from "../NotFoundView/NotFoundView"
 
 
 const Review = ({state: {reviews, status}, dispatch}) => {
 
     const isFirstRender = useRef(true);
-    const params = useParams()
-
+    const params = useParams();
     
     useEffect(() => {
         if (isFirstRender.current) {
@@ -24,13 +24,24 @@ const Review = ({state: {reviews, status}, dispatch}) => {
         };
     })
 
-    return (reviews[0] ? <ReviewList reviews={reviews} /> : <NotFoundView />)
-    
-
-    // return (
-    //     <ReviewList reviews={reviews} />
-    // );
-
+    if (status === 'idle' || status === 'pending') {
+        return (<p>Loading...</p>)
+    };
+    if (status === 'resolved') {
+        return (reviews[0] ? <ReviewList reviews={reviews} /> : <NotFoundView />)
+    };
 }
 
 export default Review
+
+Review.propTypes = {
+    state: PropTypes.shape({
+        status: PropTypes.string.isRequired,
+        reviews: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            author: PropTypes.string.isRequired,
+            content: PropTypes.string.isRequired,
+        })).isRequired
+    }),
+    dispatch: PropTypes.func.isRequired,
+};
