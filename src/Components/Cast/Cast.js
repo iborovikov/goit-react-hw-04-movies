@@ -29,7 +29,7 @@ const Cast = ({ state: { cast, status }, dispatch }) => {
                     <h4>{details.character}: {details.name}</h4>
                     {details.profile_path ?
                         <img src={`https://image.tmdb.org/t/p/w300${details.profile_path}?api_key=6e769984a853ea1bdeede26e9a1ea504`} alt={`${details.name}`} /> :
-                        <img src="http://valser-ukraine.com.ua/wp-content/uploads/2019/10/net-foto-300x300.png" alt={`${details.name}`} />
+                        <img src="https://kdm.biz.ua/image/catalog/no%20foto.png" alt={`${details.name}`} />
                     }
                 </li>
             })}
