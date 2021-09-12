@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/Components/HomePage/HomePage.module.css"],"names":[],"mappings":"AAAA,iCACE,eACF,CACA,sBACE,oBAAqB,CACrB,cAAe,CACf,iBACF","file":"HomePage.44cbc955.chunk.css","sourcesContent":[".firstRenderList {\r\n  list-style: none;\r\n}\r\n.link {\r\n  text-decoration: none;\r\n  font-size: 25px;\r\n  margin-left: -36px;\r\n}\r\n"]}
