@@ -16,7 +16,8 @@ const initialState = {
   status: 'idle',
   movieDetails: null,
   cast: [],
-  reviews: []
+  reviews: [],
+  prevLocation:''
 };
 
 function setReduser(state, action) {
@@ -33,6 +34,8 @@ function setReduser(state, action) {
       return { ...state, cast: action.payload };
     case 'setReviews':
       return { ...state, reviews: action.payload };
+    case 'setPrevLocation':
+      return { ...state, prevLocation: action.payload };
     default: console.log(`unexpected action type ${action.type}`)
   };
 };
@@ -48,7 +51,7 @@ const App = () => {
       <Suspense fallback={<p>Loading...</p>}>
         <Switch>
           <Route path="/" exact>
-            <HomePage popMovies={state.popMovies} dispatch={dispatch}/>
+            <HomePage state={state} dispatch={dispatch}/>
           </Route>
           <Route path="/movies" exact>
             <MoviesPage state={state} dispatch={dispatch} />
@@ -65,7 +68,7 @@ const App = () => {
             <Reviews state={state} dispatch={dispatch} />
           </Route>
           <Route>
-            <HomePage popMovies={state.popMovies} dispatch={dispatch}/>
+            <HomePage state={state} dispatch={dispatch}/>
           </Route>
       </Switch>
       </Suspense>

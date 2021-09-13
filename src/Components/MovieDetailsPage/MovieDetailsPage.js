@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { fetchMovieById } from "../Services/services"
 import MainDetails from "./MainDetails"
 
-const MovieDetailsPage = ({ state: { status, movieDetails }, dispatch }) => {
+const MovieDetailsPage = ({ state: { status, movieDetails, prevLocation }, dispatch }) => {
     const params = useParams();
     const isFirstRender = useRef(true);
 
@@ -25,9 +25,8 @@ const MovieDetailsPage = ({ state: { status, movieDetails }, dispatch }) => {
         return date.substring(0, 4)
     };
 
-        
     return (movieDetails && <>
-        <MainDetails movieDetails={movieDetails} dateNormalizer={dateNormalizer} />
+        <MainDetails movieDetails={movieDetails} prevLocation={prevLocation} dateNormalizer={dateNormalizer} />
         <h3>Aditional information</h3>
         <ul>
             <li><Link to={`/movies/${params.movieId}/Cast`}>Cast</Link></li>
@@ -55,6 +54,7 @@ MovieDetailsPage.propTypes = {
                 name: PropTypes.string.isRequired,
             }))
         }),
+        prevLocation: PropTypes.string,
     }),
     dispatch: PropTypes.func.isRequired,
 };

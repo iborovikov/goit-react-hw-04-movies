@@ -49,7 +49,7 @@ const MoviesPage = ({ state: { status, movieList }, dispatch }) => {
         return (
             <>
                 <MoviesPageForm onSubmit={onSubmit} handleInputChange={handleInputChange} inputText={inputText} />
-                <MoviesList movieList={movieList} />
+                <MoviesList movieList={movieList} dispatch={ dispatch }/>
             </>
         );
     };

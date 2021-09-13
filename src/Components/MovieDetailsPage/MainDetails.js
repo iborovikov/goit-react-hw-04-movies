@@ -3,15 +3,14 @@ import s from './MovieDetails.module.css'
 import { useHistory } from "react-router-dom"
 
 
-const MainDetails = ({ movieDetails, dateNormalizer }) => {
-
-    const history = useHistory()
+const MainDetails = ({ movieDetails, prevLocation, dateNormalizer }) => {
+    const history = useHistory();
 
     return (
         <>
             <div className={s.detailsContainer}>
                 <div className={s.pictureBlock}>
-                    <button type="button" onClick={history.goBack}>Go back</button>
+                    <button type="button" onClick={() => history.push(prevLocation)}>Go back</button>
                 
                     <img src={`https://image.tmdb.org/t/p/w300${movieDetails.poster_path}?api_key=6e769984a853ea1bdeede26e9a1ea504`} alt={movieDetails.title} className={s.poster} />
                 </div>
@@ -48,5 +47,6 @@ MainDetails.propTypes = {
             name: PropTypes.string.isRequired,
         }))
     }).isRequired,
+    prevLocation: PropTypes.string,
     dateNormalizer: PropTypes.func.isRequired,
 };
